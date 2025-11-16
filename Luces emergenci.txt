@@ -1,0 +1,51 @@
+# Cleo editor Android
+{$CLEO .cs}
+// Script para Luces de Emergencia Mejoradas
+
+:LOOP
+wait 0
+// Esperamos hasta que el jugador esté en un vehículo de servicio público
+
+03D4: is_player_in_any_car 0 
+if and
+03D5:   actor 0 car_model == 596 // Policía
+03D5:   actor 0 car_model == 416 // Ambulancia
+then
+    // El jugador está en un vehículo de emergencia. Ahora comprobamos si las sirenas están activas.
+    
+    02E3: car $PLAYER_CAR sirens_state 
+    if
+    then
+        // Sirenas activas: Activamos el efecto de luces
+        gosub @LUZ_ROJA
+        gosub @LUZ_AZUL
+    end
+end
+
+jump @LOOP
+
+// ------------------------------------------------------------------------------------------------
+// Subrutina para el Destello de Luz Roja
+
+:LUZ_ROJA
+    wait 200 // Esperar 200ms para el patrón de parpadeo
+    0001: wait 50 // Parpadeo Rápido
+return
+
+// ------------------------------------------------------------------------------------------------
+// Subrutina para el Destello de Luz Azul
+
+:LUZ_AZUL
+    wait 200 // Esperar 200ms para el patrón de parpadeo
+    0001: wait 50 // Parpadeo Rápido
+return
+
+0A93: end_custom_thread // MUY IMPORTANTE: Terminar el script
+
+Unofficial sanny builder for Android using Java.
+
+Support up to Android 13, only works for GTA:SA Android cleo scripts.
+
+## Dependencies
+
+- [CodeEditor](https://github.com/ahmadaghazadeh/CodeEditor)
